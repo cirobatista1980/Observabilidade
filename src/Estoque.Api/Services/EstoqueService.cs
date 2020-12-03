@@ -19,12 +19,14 @@ namespace Estoque.Api.Services
 
         public async Task<EstoqueResult> AtualizarAsync(EstoqueSignature signature)
         {
-            var estoque = new Models.Estoque(signature.EstoqueId,signature.ProdutoId,signature.Quantidade);
+            var itemEstoque = await _estoqueRepository.ObterPorIdAsync(signature.ProdutoId);
 
-            var existe = await _estoqueRepository.ObterPorIdAsync(estoque.ProdutoId);
-
-            if (existe == null)
+            if (itemEstoque == null)
                 return null;
+
+            var estoque = new Models.Estoque(itemEstoque.EstoqueId, signature.ProdutoId, signature.Quantidade);
+
+            estoque.Aumentar(signature.Quantidade);
 
             await _estoqueRepository.AtualizarAsync(estoque);
 
@@ -33,7 +35,7 @@ namespace Estoque.Api.Services
 
         public async Task InserirAsync(EstoqueSignature signature)
         {
-            var estoque = new Models.Estoque(signature.ProdutoId,signature.Quantidade);
+            var estoque = new Models.Estoque(signature.ProdutoId, signature.Quantidade);
 
             var existe = await _estoqueRepository.ObterPorIdAsync(estoque.ProdutoId);
 

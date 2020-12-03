@@ -1,6 +1,6 @@
 using System;
 
-namespace Estoque.Api.Dto.Result
+namespace Venda.Api.Dto.Result
 {
     public class ProdutoResult
     {
