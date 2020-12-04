@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L/+icg0aQaJaYMjDXKG4O/KqYhomAvLfoMqRFDTDp+H+eH1u4Tgigb6mapvvLWfeCOkCuH86OaqLpkbC8C3w8A==",
+  "dgSpecHash": "zKh1RN9gGnyXi2yj+gl7ZgwN+A1sVljEdsoUl2ZrGltxI77U6Qdd3bqEaAGxHdejmAR2TzNsDxHDbLne3hTqbg==",
   "success": true,
   "projectFilePath": "C:\\src\\dotnet\\micro-Services\\src\\Estoque.Api\\Estoque.Api.csproj",
   "expectedPackageFiles": [

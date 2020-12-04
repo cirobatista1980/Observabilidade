@@ -4994,7 +4994,7 @@
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.Extensions.Configuration >= 5.0.0",
       "MongoDB.Driver >= 2.11.4",
-      "Swashbuckle.AspNetCore >= *"
+      "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
   "packageFolders": {
@@ -5049,7 +5049,7 @@
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[*, )"
+            "version": "[5.6.3, )"
           }
         },
         "imports": [
