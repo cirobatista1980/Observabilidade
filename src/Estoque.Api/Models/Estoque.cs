@@ -4,7 +4,7 @@ namespace Estoque.Api.Models
 {
     public class Estoque
     {
-        public Guid Id {get;}
+        public Guid Id {get;private set;}
         public Guid ProdutoId { get; private set; }
         public int Quantidade { get; private set; }
         public void Reduzir(int _quantidade)

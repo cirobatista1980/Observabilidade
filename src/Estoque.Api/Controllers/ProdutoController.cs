@@ -40,9 +40,18 @@ namespace Estoque.Api.Controllers
         [ProducesResponseType(typeof(List<ProdutoResult>), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             return Ok(await _produtoService.ObterTodosAsync());
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(List<ProdutoResult>), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            return Ok(await _produtoService.ObterPorIdAsync(id));
         }
     }
 }

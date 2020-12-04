@@ -10,6 +10,7 @@ namespace Estoque.Api.Services.Converters
         {
             return new ProdutoResult()
             {
+                ProdutoId = result.Id,
                 Descricao = result.Descricao,
                 Nome = result.Nome,
                 Preco = result.Preco,

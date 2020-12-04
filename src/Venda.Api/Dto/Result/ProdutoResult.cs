@@ -4,10 +4,10 @@ namespace Venda.Api.Dto.Result
 {
     public class ProdutoResult
     {
-        public Guid ProdutoId { get; set;}
-        public string Descricao { get; set; }
-        public decimal Preco { get; set; }
-        public string Nome { get; set; }
-        public int Quantidade { get; set; }
+        public Guid produtoId { get; set;}
+        public string descricao { get; set; }
+        public decimal preco { get; set; }
+        public string nome { get; set; }
+        public int quantidade { get; set; }
     }
 }

@@ -35,12 +35,11 @@ namespace Estoque.Api.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("{id}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(typeof(EstoqueResult), 202)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Put([FromBody] EstoqueSignature signature)
+        public async Task<IActionResult> Put(Guid id, [FromBody] EstoqueSignature signature)
         {
             try
             {

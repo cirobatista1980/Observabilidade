@@ -25,12 +25,14 @@ namespace Venda.Api.Services
             IConfiguration configuration,
             IVendaRepository vendaRepository,
             IHttpGateway<PagamentoSignature, PagamentoResult> pagamentoGateway,
-            IHttpGateway<EstoqueSignature, EstoqueResult> estoqueGateway
+            IHttpGateway<EstoqueSignature, EstoqueResult> estoqueGateway,
+            IHttpGateway<ProdutoSignature, ProdutoResult> produtoGateway
         )
         {
             _vendaRepository = vendaRepository;
             _pagamentoGateway = pagamentoGateway;
             _estoqueGateway = estoqueGateway;
+            _produtoGateway = produtoGateway;
 
             urlPagamento = configuration.GetSection("Pagamento").Value;
             urlEstoque = configuration.GetSection("Estoque").Value;
@@ -65,9 +67,9 @@ namespace Venda.Api.Services
                 if (!estoqueResult.Sucesso)
                     throw new Exception(estoqueResult.MessagemErro);
 
-                produtos.Add(new Produto(produtoResult.ObjectToSerialize.Descricao,produtoResult.ObjectToSerialize.Preco));
+                // produtos.Add(new Produto(produtoResult.ObjectToSerialize.Descricao,produtoResult.ObjectToSerialize.Preco));
 
-                total += produtoResult.ObjectToSerialize.Preco;
+                // total += produtoResult.ObjectToSerialize.Preco;
             }
 
             var pagamento = new PagamentoSignature()

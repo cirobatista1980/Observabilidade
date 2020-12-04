@@ -19,12 +19,10 @@ namespace Estoque.Api.Services
 
         public async Task<EstoqueResult> AtualizarAsync(EstoqueSignature signature)
         {
-            var itemEstoque = await _estoqueRepository.ObterPorIdAsync(signature.ProdutoId);
+            var estoque = await _estoqueRepository.ObterPorIdAsync(signature.ProdutoId);
 
-            if (itemEstoque == null)
+            if (estoque == null)
                 return null;
-
-            var estoque = new Models.Estoque(itemEstoque.Id, signature.ProdutoId, signature.Quantidade);
 
             estoque.Aumentar(signature.Quantidade);
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Venda.Api.Gateway.Interfaces;
 using Venda.Api.Models;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace Venda.Api.Gateway
 {
@@ -17,7 +18,7 @@ namespace Venda.Api.Gateway
             _factory = factory;
         }
 
-        public async Task<ResponseModel<TR>> GetAllAsync(string url)
+        public async Task<ResponseModel<List<TR>>> GetAllAsync(string url)
         {
             var cliente = _factory.CreateClient();
             var dados = new StringContent("", Encoding.UTF8, "application/json");
@@ -26,7 +27,7 @@ namespace Venda.Api.Gateway
 
             if (!response.IsSuccessStatusCode)
             {
-                return new ResponseModel<TR>()
+                return new ResponseModel<List<TR>>()
                 {
                     Sucesso = false,
                     MessagemErro = await response.Content.ReadAsStringAsync()
@@ -35,10 +36,10 @@ namespace Venda.Api.Gateway
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            return new ResponseModel<TR>()
+            return new ResponseModel<List<TR>>()
             {
                 Sucesso = true,
-                ObjectToSerialize = JsonSerializer.Deserialize<TR>(responseContent)
+                ObjectToSerialize = JsonSerializer.Deserialize<List<TR>>(responseContent)
             };
         }
 
