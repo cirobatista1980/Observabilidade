@@ -4,10 +4,10 @@ namespace Venda.Api.Dto.Result
 {
     public class PagamentoResult
     {
-        public Guid PagamentoId { get;  set; }
-        public string NumeroCartao { get;  set; }
-        public int NumeroParcelas { get;  set; }
-        public decimal Total { get;  set; }
-        public decimal ValorParcelas { get;  set; }
+        public Guid pagamentoId { get;  set; }
+        public string numeroCartao { get;  set; }
+        public int numeroParcelas { get;  set; }
+        public decimal total { get;  set; }
+        public decimal valorParcelas { get;  set; }
     }
 }

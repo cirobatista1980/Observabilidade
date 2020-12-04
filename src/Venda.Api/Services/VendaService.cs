@@ -67,9 +67,9 @@ namespace Venda.Api.Services
                 if (!estoqueResult.Sucesso)
                     throw new Exception(estoqueResult.MessagemErro);
 
-                // produtos.Add(new Produto(produtoResult.ObjectToSerialize.Descricao,produtoResult.ObjectToSerialize.Preco));
+                produtos.Add(new Produto(produtoResult.ObjectToSerialize.descricao, produtoResult.ObjectToSerialize.preco));
 
-                // total += produtoResult.ObjectToSerialize.Preco;
+                total += produtoResult.ObjectToSerialize.preco;
             }
 
             var pagamento = new PagamentoSignature()
@@ -85,10 +85,10 @@ namespace Venda.Api.Services
                 throw new Exception(response.MessagemErro);
 
 
-            var venda = new Models.Venda(new Pagamento(response.ObjectToSerialize.PagamentoId,
-                                                response.ObjectToSerialize.NumeroCartao,
-                                                response.ObjectToSerialize.NumeroParcelas,
-                                                response.ObjectToSerialize.Total));
+            var venda = new Models.Venda(new Pagamento(response.ObjectToSerialize.pagamentoId,
+                                                response.ObjectToSerialize.numeroCartao,
+                                                response.ObjectToSerialize.numeroParcelas,
+                                                response.ObjectToSerialize.total));
             venda.AdicionarProdutos(produtos);
 
             await _vendaRepository.InserirAsync(venda).ConfigureAwait(false);
