@@ -35,7 +35,8 @@ namespace Estoque.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
+        [Route("{id}")]
         [ProducesResponseType(typeof(EstoqueResult), 202)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]

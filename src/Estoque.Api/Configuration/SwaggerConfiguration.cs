@@ -16,14 +16,14 @@ namespace Estoque.Api.Configuration
                     Description = "API de Estoque e Produtos",
                     Contact = new OpenApiContact
                     {
-                        Email = @"ciro.batista.1980@gmail.com",
+                        Email = "ciro.batista.1980@gmail.com",
                         Name = "Ciro Batista",
-                        Url = new Uri(@"https://www.linkedin.com/in/ciro-batista-33b97235/")
+                        Url = new Uri("https://www.linkedin.com/in/ciro-batista-33b97235/")
                     },
                     License = new OpenApiLicense
                     {
                         Name = "Ciro Batista",
-                        Url = new Uri(@"https://github.com/cirobatista1980/Observabilidade")
+                        Url = new Uri("https://github.com/cirobatista1980/Observabilidade")
                     }
                 });
             });

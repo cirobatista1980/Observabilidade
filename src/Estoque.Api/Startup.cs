@@ -27,8 +27,11 @@ namespace Estoque.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddOptions();
+            services.AddHttpClient();
             services.IntegrateDependencyResolver();
             services.IntegrateSswagger();
+            services.AddSingleton(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +51,11 @@ namespace Estoque.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("./v1/swagger.json", "Observabilidade");
             });
         }
     }
