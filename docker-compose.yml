@@ -1,48 +1,69 @@
+version: '3.4'
 
 services:
-
   elasticsearch:
-   container_name: elasticsearch
-   image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
-   ports:
-    - 9200:9200
-   volumes:
-    - elasticsearch-data:/usr/share/elasticsearch/data
-   environment:
-    - xpack.monitoring.enabled=true
-    - xpack.watcher.enabled=false
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    - discovery.type=single-node
-   networks:
-    - elastic
-
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    volumes:
+      - ./elastic:/usr/share/elasticsearch/data   
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+     
   kibana:
-   container_name: kibana
-   image: docker.elastic.co/kibana/kibana:7.9.2
-   ports:
-    - 5601:5601
-   depends_on:
-    - elasticsearch
-   environment:
-    - ELASTICSEARCH_URL=http://localhost:9200
-   networks:
-    - elastic
-  
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    depends_on:
+      - elasticsearch
+
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.7.0
+    image: docker.elastic.co/apm/apm-server:7.9.3
     container_name: apm-server
     ports:
       - "8200:8200"
       - "8201:8200"
     environment:
       - output.elasticsearch.hosts=['http://localhost:9200']
-      - apm-server.host="0.0.0.0:8200"
+      - apm-server.host="localhost:8200"
       - setup.kibana.host="kibana:5601"
     depends_on:
       - elasticsearch
-networks:
-  elastic:
-    driver: bridge
 
-volumes:
-  elasticsearch-data:
+  pagamento.api:
+    image: pagamento-api
+    build:
+      context: .
+      dockerfile: src/Pagamento.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  venda.api:
+    image: venda-api
+    build:
+      context: .
+      dockerfile: src/Venda.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  estoque.api:
+    image: estoque-api
+    build:
+      context: .
+      dockerfile: src/Estoque.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  nosql.server:
+    image: mongo
+    ports:
+      - "17017:27017"
