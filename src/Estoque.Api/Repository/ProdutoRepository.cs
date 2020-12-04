@@ -20,7 +20,7 @@ namespace Estoque.Api.Repository
 
         public async Task AtualizarAsync(Produto produto)
         {
-            var filtro = Builders<Models.Produto>.Filter.Eq(x => x.ProdutoId, produto.ProdutoId);
+            var filtro = Builders<Models.Produto>.Filter.Eq(x => x.Id, produto.Id);
 
             var updateDefinition = Builders<Models.Produto>.Update.Set(x => x.Descricao, produto.Descricao);
 
@@ -34,7 +34,7 @@ namespace Estoque.Api.Repository
 
         public async Task<Produto> ObterPorIdAsync(Guid produtoId)
         {
-            return await _contexto.Produto.AsQueryable().Where(item => item.ProdutoId == produtoId).FirstOrDefaultAsync();
+            return await _contexto.Produto.AsQueryable().Where(item => item.Id == produtoId).FirstOrDefaultAsync();
         }
 
         public async Task<List<Produto>> ObterTodosAsync()

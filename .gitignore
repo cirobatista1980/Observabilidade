@@ -14,6 +14,8 @@
 # Local History for Visual Studio Code
 .history/
 
+#Elastic-Search
+elastic/
 
 # User-specific files
 *.rsuser

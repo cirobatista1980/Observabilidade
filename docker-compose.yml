@@ -38,6 +38,9 @@ services:
 
   pagamento.api:
     image: pagamento-api
+    ports:
+      - "5002:80"
+      - "5003:443"
     build:
       context: .
       dockerfile: src/Pagamento.Api/Dockerfile
@@ -47,6 +50,9 @@ services:
 
   venda.api:
     image: venda-api
+    ports:
+      - "5004:80"
+      - "5005:443"
     build:
       context: .
       dockerfile: src/Venda.Api/Dockerfile
@@ -56,6 +62,9 @@ services:
 
   estoque.api:
     image: estoque-api
+    ports:
+      - "5000:80"
+      - "5001:443"
     build:
       context: .
       dockerfile: src/Estoque.Api/Dockerfile

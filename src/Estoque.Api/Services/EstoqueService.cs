@@ -24,7 +24,7 @@ namespace Estoque.Api.Services
             if (itemEstoque == null)
                 return null;
 
-            var estoque = new Models.Estoque(itemEstoque.EstoqueId, signature.ProdutoId, signature.Quantidade);
+            var estoque = new Models.Estoque(itemEstoque.Id, signature.ProdutoId, signature.Quantidade);
 
             estoque.Aumentar(signature.Quantidade);
 

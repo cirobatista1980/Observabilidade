@@ -4,14 +4,14 @@ namespace Estoque.Api.Models
 {
     public class Produto
     {
-        public Guid ProdutoId { get; }
+        public Guid Id { get; private set;}
         public string Descricao { get; private set; }
         public decimal Preco { get; private set; }
         public string Nome { get; private set; }
         public int Quantidade { get; private set; }
         public Produto(string _nome, string _descricao, decimal _preco, int _qtd)
         {
-            ProdutoId = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Descricao = _descricao;
             Preco = _preco;
             Nome = _nome;
@@ -19,6 +19,15 @@ namespace Estoque.Api.Models
             Validar();
         }
 
+        public Produto(Guid _id, string _nome, string _descricao, decimal _preco, int _qtd)
+        {
+            Id = _id;
+            Descricao = _descricao;
+            Preco = _preco;
+            Nome = _nome;
+            Quantidade = _qtd;
+            Validar();
+        }
         private void Validar()
         {
             if (string.IsNullOrEmpty(Descricao))

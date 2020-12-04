@@ -8,7 +8,7 @@ namespace Estoque.Api.Services.Converters
         {
             return new EstoqueResult()
             {
-                EstoqueId = result.EstoqueId,
+                EstoqueId = result.Id,
                 ProdutoId = result.ProdutoId,
                 Quantidade = result.Quantidade
             };

@@ -14,7 +14,7 @@ namespace Pagamento.Api.Configuration
                 {
                     Title = "API de Estoque e Produtos",
                     Version = "v1",
-                    Description = "API de Estoque e Produtos",
+                    Description = "API de Pagamentos",
                     Contact = new OpenApiContact
                     {
                         Email = @"ciro.batista.1980@gmail.com",

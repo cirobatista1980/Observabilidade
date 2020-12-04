@@ -4,7 +4,7 @@ namespace Estoque.Api.Models
 {
     public class Estoque
     {
-        public Guid EstoqueId {get;}
+        public Guid Id {get;}
         public Guid ProdutoId { get; private set; }
         public int Quantidade { get; private set; }
         public void Reduzir(int _quantidade)
@@ -17,14 +17,14 @@ namespace Estoque.Api.Models
         public void Aumentar(int _quantidade) => Quantidade += _quantidade;
         public Estoque(Guid _produtoId, int _quantidade)
         {
-            EstoqueId = Guid.NewGuid();
+            Id = Guid.NewGuid();
             ProdutoId = _produtoId;
             Quantidade = _quantidade;
             Validar();
         }
         public Estoque(Guid _id, Guid _produtoId, int _quantidade)
         {
-            EstoqueId = _id;
+            Id = _id;
             ProdutoId = _produtoId;
             Quantidade = _quantidade;
             Validar();

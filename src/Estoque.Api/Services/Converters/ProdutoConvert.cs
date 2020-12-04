@@ -21,6 +21,7 @@ namespace Estoque.Api.Services.Converters
         {
             return result.Select(x => new ProdutoResult()
             {
+                ProdutoId = x.Id,
                 Descricao = x.Descricao,
                 Nome = x.Nome,
                 Preco = x.Preco,

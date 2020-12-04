@@ -33,14 +33,14 @@ namespace Estoque.Api.Services
 
             await _produtoRepository.InserirAsync(produto).ConfigureAwait(false);
 
-            var estoque = await _estoqueRepository.ObterPorIdAsync(produto.ProdutoId);
+            var estoque = await _estoqueRepository.ObterPorIdAsync(produto.Id);
 
             if (estoque == null)
             {
                 if (produto.Quantidade <= 0)
                     throw new ArgumentNullException("Quantidade de estoque necessita ser maior que zero");
 
-                new Models.Estoque(Guid.NewGuid(), produto.ProdutoId, produto.Quantidade);
+                estoque = new Models.Estoque(Guid.NewGuid(), produto.Id, produto.Quantidade);
 
                 await _estoqueRepository.InserirAsync(estoque).ConfigureAwait(false);
             }
