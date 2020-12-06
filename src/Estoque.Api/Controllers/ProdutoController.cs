@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Elastic.Apm;
 using Estoque.Api.Dto.Result;
 using Estoque.Api.Dto.Signature;
 using Estoque.Api.Services.Interfaces;
@@ -42,7 +43,22 @@ namespace Estoque.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _produtoService.ObterTodosAsync());
+            var transaction = Agent.Tracer.StartTransaction("Consultado todos os Produtos", "Requisição");
+            try
+            {
+                return Ok(await _produtoService.ObterTodosAsync());
+            }
+            catch (Exception ex)
+            {
+                transaction.CaptureException(ex);
+                return BadRequest($"Erro => {ex.Message}");
+            }
+            finally
+            {
+                transaction.End();
+            }
+
+
         }
 
         [HttpGet("{id}")]

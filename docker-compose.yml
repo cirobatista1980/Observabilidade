@@ -32,8 +32,8 @@ services:
       - "8200:8200"
       - "8201:8200"
     environment:
-      - output.elasticsearch.hosts=['http://localhost:9200']
-      - apm-server.host="localhost:8200"
+      - output.elasticsearch.hosts=['http://elasticsearch:9200']
+      - apm-server.host="0.0.0.0:8200"
       - setup.kibana.host="kibana:5601"
     depends_on:
       - elasticsearch
@@ -78,6 +78,7 @@ services:
       - elasticsearch
 
   nosql.server:
+    container_name: nosql.server
     image: mongo
     ports:
       - "17017:27017"
