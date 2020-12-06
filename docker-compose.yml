@@ -1,4 +1,6 @@
 version: '3.4'
+# docker-compose -f docker-compose.yml up -d --build
+# docker rmi $(docker images -q)
 
 services:
   elasticsearch:
