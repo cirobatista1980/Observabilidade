@@ -12,7 +12,7 @@ namespace Pagamento.Api.Configuration
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "API de Estoque e Produtos",
+                    Title = "API de Pagamentos",
                     Version = "v1",
                     Description = "API de Pagamentos",
                     Contact = new OpenApiContact

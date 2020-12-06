@@ -12,7 +12,7 @@ namespace Venda.Api.Configuration
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "API de Estoque e Produtos",
+                    Title = "API de Vendas",
                     Version = "v1",
                     Description = "API de Vendas",
                     Contact = new OpenApiContact
