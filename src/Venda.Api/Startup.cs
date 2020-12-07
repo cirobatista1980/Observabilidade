@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 using Venda.Api.Configuration;
 
 namespace Venda.Api
@@ -20,6 +22,15 @@ namespace Venda.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var uriElastic = Configuration["ElasticConfiguration:Uri"];
+
+            Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(uriElastic))
+            {
+                AutoRegisterTemplate = true
+            })
+            .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -36,7 +47,7 @@ namespace Venda.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseAllElasticApm(Configuration);
             
@@ -45,6 +56,8 @@ namespace Venda.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            loggerFactory.AddSerilog();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
