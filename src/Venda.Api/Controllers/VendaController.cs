@@ -11,7 +11,7 @@ using Venda.Api.Services.Interfaces;
 namespace Venda.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class VendaController : ControllerBase
     {
         private readonly IVendaService _vendaService;
