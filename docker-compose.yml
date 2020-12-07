@@ -1,0 +1,84 @@
+version: '3.4'
+# docker-compose -f docker-compose.yml up -d --build
+# docker rmi $(docker images -q)
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    volumes:
+      - ./elastic:/usr/share/elasticsearch/data   
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+     
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    depends_on:
+      - elasticsearch
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.9.3
+    container_name: apm-server
+    ports:
+      - "8200:8200"
+      - "8201:8200"
+    environment:
+      - output.elasticsearch.hosts=['http://elasticsearch:9200']
+      - apm-server.host="0.0.0.0:8200"
+      - setup.kibana.host="kibana:5601"
+    depends_on:
+      - elasticsearch
+
+  pagamento.api:
+    container_name: pagamento-api
+    image: pagamento-api
+    ports:
+      - "5002:80"
+      - "5003:443"
+    build:
+      context: .
+      dockerfile: src/Pagamento.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  venda.api:
+    container_name: venda-api
+    image: venda-api
+    ports:
+      - "5004:80"
+      - "5005:443"
+    build:
+      context: .
+      dockerfile: src/Venda.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  estoque.api:
+    container_name: estoque-api
+    image: estoque-api
+    ports:
+      - "5000:80"
+      - "5001:443"
+    build:
+      context: .
+      dockerfile: src/Estoque.Api/Dockerfile
+    depends_on:
+      - nosql.server
+      - elasticsearch
+
+  nosql.server:
+    container_name: nosql.server
+    image: mongo
+    ports:
+      - "17017:27017"

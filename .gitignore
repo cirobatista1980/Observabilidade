@@ -3,6 +3,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+<<<<<<< HEAD
+=======
+# Files for Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+#Elastic-Search
+elastic/
+
+>>>>>>> 4348c592dcbfe14409002d7f077461ae7e1e0ca0
 # User-specific files
 *.rsuser
 *.suo
@@ -23,6 +40,10 @@ mono_crash.*
 [Rr]eleases/
 x64/
 x86/
+<<<<<<< HEAD
+=======
+[Ww][Ii][Nn]32/
+>>>>>>> 4348c592dcbfe14409002d7f077461ae7e1e0ca0
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -61,6 +82,12 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+<<<<<<< HEAD
+=======
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+>>>>>>> 4348c592dcbfe14409002d7f077461ae7e1e0ca0
 # StyleCop
 StyleCopReport.xml
 
@@ -137,6 +164,14 @@ _TeamCity*
 .axoCover/*
 !.axoCover/settings.json
 
+<<<<<<< HEAD
+=======
+# Coverlet is a free, cross platform Code Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+>>>>>>> 4348c592dcbfe14409002d7f077461ae7e1e0ca0
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
@@ -348,3 +383,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+<<<<<<< HEAD
+=======
+
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
+>>>>>>> 4348c592dcbfe14409002d7f077461ae7e1e0ca0
