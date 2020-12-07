@@ -15,10 +15,11 @@ namespace Venda.Api.Controllers
     public class VendaController : ControllerBase
     {
         private readonly IVendaService _vendaService;
-
-        public VendaController(IVendaService vendaService)
+        private readonly ILogger _logger;
+        public VendaController(IVendaService vendaService, ILogger<VendaController> logger)
         {
             _vendaService = vendaService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -36,6 +37,7 @@ namespace Venda.Api.Controllers
             catch (Exception ex)
             {
                 transaction.CaptureException(ex);
+                _logger.LogError(ex.ToString());
                 return BadRequest($"Erro => {ex.Message}");
             }
             finally

@@ -40,7 +40,7 @@ namespace Pagamento.Api.Models
         {
             ValorParcelas = Total;
 
-            if (NumeroParcelas > 0)
+            //if (NumeroParcelas > 0)
                 ValorParcelas = Total / NumeroParcelas;
 
         }
