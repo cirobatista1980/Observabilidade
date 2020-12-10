@@ -30,7 +30,7 @@ namespace Venda.Api.Models
         {
             var valido = true;
 
-            if (NumeroCartao.Equals("1234567890123456") || NumeroCartao.Length < 16)
+            if (NumeroCartao.Length < 16)
                 valido = false;
 
             return valido;
