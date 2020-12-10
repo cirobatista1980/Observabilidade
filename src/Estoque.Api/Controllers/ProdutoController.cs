@@ -6,6 +6,7 @@ using Estoque.Api.Dto.Result;
 using Estoque.Api.Dto.Signature;
 using Estoque.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Estoque.Api.Controllers
 {
@@ -14,10 +15,11 @@ namespace Estoque.Api.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
-
-        public ProdutoController(IProdutoService produtoService)
+        private readonly ILogger _logger;
+        public ProdutoController(IProdutoService produtoService, ILogger<ProdutoController> logger)
         {
             _produtoService = produtoService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -33,6 +35,7 @@ namespace Estoque.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Erro ao Salvar um Produto");
                 return BadRequest($"Erro => {ex.Message}");
             }
         }
@@ -51,6 +54,7 @@ namespace Estoque.Api.Controllers
             catch (Exception ex)
             {
                 transaction.CaptureException(ex);
+                _logger.LogError(ex, "Erro ao buscar todos os produtos");
                 return BadRequest($"Erro => {ex.Message}");
             }
             finally
@@ -67,7 +71,16 @@ namespace Estoque.Api.Controllers
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get(Guid id)
         {
-            return Ok(await _produtoService.ObterPorIdAsync(id));
+            try
+            {
+                return Ok(await _produtoService.ObterPorIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar todos os produtos");
+                return BadRequest($"Erro => {ex.Message}");
+            }
+
         }
     }
 }

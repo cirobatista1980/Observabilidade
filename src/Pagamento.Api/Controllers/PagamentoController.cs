@@ -15,9 +15,11 @@ namespace Pagamento.Api.Controllers
     public class PagamentoController : ControllerBase
     {
         private readonly IPagamentoService _pagamentoService;
-        public PagamentoController(IPagamentoService pagamentoService)
+        private readonly ILogger _logger;
+        public PagamentoController(IPagamentoService pagamentoService, ILogger<PagamentoController> logger)
         {
             _pagamentoService = pagamentoService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -33,6 +35,7 @@ namespace Pagamento.Api.Controllers
             }
             catch (ArgumentException ex)
             {
+                _logger.LogError(ex.ToString());
                 return BadRequest($"Pagamento => {ex.Message}");
             }
         }

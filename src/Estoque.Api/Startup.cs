@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Elastic.Apm.NetCoreAll;
+using Elastic.Apm.SerilogEnricher;
 using Estoque.Api.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,19 +20,23 @@ namespace Estoque.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-
-            var uriElastic = Configuration["ElasticConfiguration:Uri"];
-
-            Log.Logger = new LoggerConfiguration()
-            .Enrich.FromLogContext()
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(uriElastic))
-            {
-                AutoRegisterTemplate = true
-            })
-            .CreateLogger();
+            Log.Logger =  new LoggerConfiguration()
+                .Enrich.WithElasticApmCorrelationInfo()
+                .Enrich.WithMachineName()
+                .WriteTo.Elasticsearch(
+                            new ElasticsearchSinkOptions(new Uri(Configuration["ElasticConfiguration:Uri"]))
+                            {
+                                IndexFormat = $"{Configuration["ApplicationName"]}-logs-{env.EnvironmentName?.ToLower().Replace(".","-")}-{DateTime.UtcNow:yyyy-MM-dd}",
+                                AutoRegisterTemplate = true,
+                                NumberOfShards = 2,
+                                NumberOfReplicas = 1
+                            })
+                .WriteTo.Console(outputTemplate: "[{ElasticApmTraceId} {ElasticApmTransactionId} {Message:lj} {NewLine}{Exception}")
+                .CreateLogger();
+   
         }
 
         public IConfiguration Configuration { get; }
@@ -45,6 +50,7 @@ namespace Estoque.Api
             services.IntegrateDependencyResolver();
             services.IntegrateSswagger();
             services.AddSingleton(Configuration);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

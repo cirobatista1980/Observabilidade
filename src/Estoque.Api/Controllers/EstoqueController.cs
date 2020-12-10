@@ -4,7 +4,7 @@ using Estoque.Api.Dto.Result;
 using Estoque.Api.Dto.Signature;
 using Estoque.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Logging;
 namespace Estoque.Api.Controllers
 {
     [ApiController]
@@ -12,10 +12,11 @@ namespace Estoque.Api.Controllers
     public class EstoqueController : ControllerBase
     {
         private readonly IEstoqueService _estoqueService;
-
-        public EstoqueController(IEstoqueService estoqueService)
+        private readonly ILogger _logger;
+        public EstoqueController(IEstoqueService estoqueService, ILogger<EstoqueController> logger)
         {
             _estoqueService = estoqueService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -31,6 +32,7 @@ namespace Estoque.Api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,"Erro ao adicionar estoque");
                 return BadRequest($"Erro => {ex.Message}");
             }
         }
@@ -45,13 +47,14 @@ namespace Estoque.Api.Controllers
             {
                 var retorno = await _estoqueService.AtualizarAsync(signature);
 
-                if(retorno == null)
+                if (retorno == null)
                     return NotFound();
 
-                return Accepted("",retorno);
+                return Accepted("", retorno);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,"Erro ao alterar estoque");
                 return BadRequest($"Erro => {ex.Message}");
             }
         }
