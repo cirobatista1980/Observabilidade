@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elastic.Apm.NetCoreAll;
 using Elastic.Apm.SerilogEnricher;
+using Elastic.CommonSchema.Serilog;
 using Estoque.Api.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +33,8 @@ namespace Estoque.Api
                                 IndexFormat = $"{Configuration["ApplicationName"]}-logs-{env.EnvironmentName?.ToLower().Replace(".","-")}-{DateTime.UtcNow:yyyy-MM-dd}",
                                 AutoRegisterTemplate = true,
                                 NumberOfShards = 2,
-                                NumberOfReplicas = 1
+                                NumberOfReplicas = 1,
+                                CustomFormatter = new EcsTextFormatter()
                             })
                 .WriteTo.Console(outputTemplate: "[{ElasticApmTraceId} {ElasticApmTransactionId} {Message:lj} {NewLine}{Exception}")
                 .CreateLogger();
