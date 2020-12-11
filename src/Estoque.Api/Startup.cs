@@ -75,9 +75,7 @@ namespace Estoque.Api
             {
                 endpoints.MapControllers();
             });
-
-
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
